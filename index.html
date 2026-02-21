@@ -1,0 +1,326 @@
+<!doctype html>
+<html lang="ro">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>DocFlowAI – Fluxuri inteligente de documente</title>
+  <meta name="description" content="DocFlowAI automatizează circuitul documentelor: generare asistată de AI, aprobări, audit și semnare. Pentru administrație publică și companii." />
+  <meta name="robots" content="index,follow" />
+  <style>
+    :root{
+      --bg:#0b1020;
+      --card:#0f1731;
+      --muted:#9db0ff;
+      --text:#eaf0ff;
+      --sub:#cdd8ff;
+      --line:rgba(255,255,255,.10);
+      --accent:#7c5cff;
+      --accent2:#2dd4bf;
+      --shadow: 0 20px 60px rgba(0,0,0,.35);
+      --radius:18px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font: 16px/1.55 ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,"Apple Color Emoji","Segoe UI Emoji";
+      color:var(--text);
+      background:
+        radial-gradient(900px 500px at 18% 8%, rgba(124,92,255,.35), transparent 60%),
+        radial-gradient(700px 450px at 82% 12%, rgba(45,212,191,.22), transparent 55%),
+        radial-gradient(900px 600px at 50% 90%, rgba(124,92,255,.16), transparent 60%),
+        var(--bg);
+    }
+    a{color:inherit}
+    .wrap{max-width:1100px;margin:0 auto;padding:28px 18px 70px}
+    .nav{
+      display:flex;align-items:center;justify-content:space-between;
+      gap:14px;margin-bottom:22px;
+    }
+    .brand{display:flex;align-items:center;gap:10px;text-decoration:none}
+    .logo{
+      width:36px;height:36px;border-radius:12px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      box-shadow: 0 10px 30px rgba(124,92,255,.25);
+    }
+    .brand b{letter-spacing:.2px}
+    .pillbar{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end}
+    .pill{
+      padding:8px 12px;border:1px solid var(--line);border-radius:999px;
+      background: rgba(255,255,255,.04);
+      color:var(--sub); text-decoration:none;
+    }
+    .pill:hover{border-color:rgba(255,255,255,.22)}
+    .hero{
+      display:grid;grid-template-columns:1.1fr .9fr;gap:18px;align-items:stretch;
+      margin-top:14px;
+    }
+    @media (max-width: 900px){ .hero{grid-template-columns:1fr} .pillbar{justify-content:flex-start}}
+    .card{
+      border:1px solid var(--line);
+      background: rgba(15,23,49,.72);
+      backdrop-filter: blur(10px);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 22px;
+    }
+    h1{font-size:44px;line-height:1.05;margin:6px 0 12px}
+    @media (max-width: 520px){ h1{font-size:36px}}
+    .lead{color:var(--sub);font-size:18px;margin:0 0 18px}
+    .badges{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0 0}
+    .badge{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:8px 12px;border-radius:999px;
+      background: rgba(255,255,255,.05);
+      border:1px solid rgba(255,255,255,.10);
+      color:var(--sub);
+    }
+    .dot{width:9px;height:9px;border-radius:50%}
+    .dot.a{background:var(--accent)}
+    .dot.b{background:var(--accent2)}
+    .ctaRow{display:flex;gap:12px;flex-wrap:wrap;margin-top:18px}
+    .btn{
+      display:inline-flex;align-items:center;justify-content:center;gap:10px;
+      padding:11px 14px;border-radius:14px;text-decoration:none;
+      border:1px solid rgba(255,255,255,.16);
+      background: rgba(255,255,255,.06);
+      color:var(--text);
+      cursor:pointer;
+    }
+    .btn:hover{border-color:rgba(255,255,255,.28)}
+    .btn.primary{
+      border: none;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      box-shadow: 0 18px 40px rgba(124,92,255,.22);
+      font-weight:700;
+    }
+    .btn.primary:hover{filter:brightness(1.03)}
+    .mini{color:var(--muted);font-size:13px;margin-top:10px}
+    .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
+    @media (max-width: 900px){ .grid2{grid-template-columns:1fr}}
+    .k{font-size:14px;color:var(--muted);margin:0}
+    .v{margin:6px 0 0;color:var(--text);font-size:18px}
+    .section{margin-top:18px}
+    .section h2{margin:0 0 10px;font-size:22px}
+    .list{margin:0;padding:0;list-style:none;display:grid;gap:10px}
+    .li{
+      padding:12px;border:1px solid var(--line);border-radius:14px;
+      background: rgba(255,255,255,.04);
+      color:var(--sub);
+    }
+    .split{
+      display:grid;grid-template-columns:1fr 1fr;gap:14px
+    }
+    @media (max-width:900px){.split{grid-template-columns:1fr}}
+    .tag{
+      display:inline-flex;align-items:center;gap:8px;
+      font-size:12px;color:var(--sub);
+      border:1px solid rgba(255,255,255,.14);
+      padding:6px 10px;border-radius:999px;background:rgba(255,255,255,.04);
+      margin-bottom:10px;
+    }
+    .footer{
+      margin-top:22px;color:rgba(234,240,255,.78);
+      display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between
+    }
+    .footLinks{display:flex;gap:12px;flex-wrap:wrap}
+    .muted{color:rgba(234,240,255,.65)}
+    .hr{height:1px;background:var(--line);margin:18px 0}
+    input, textarea{
+      width:100%;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.04);
+      color: var(--text);
+      border-radius: 14px;
+      padding: 12px 12px;
+      outline: none;
+    }
+    textarea{min-height:96px;resize:vertical}
+    label{display:block;margin:10px 0 6px;color:var(--sub);font-size:13px}
+    .row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    @media (max-width: 700px){ .row{grid-template-columns:1fr}}
+    .note{font-size:12px;color:rgba(234,240,255,.62);margin-top:10px}
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <div class="nav">
+      <a class="brand" href="#top" aria-label="DocFlowAI">
+        <div class="logo" aria-hidden="true"></div>
+        <div><b>DocFlowAI</b><div class="muted" style="font-size:12px;margin-top:-2px;">Fluxuri inteligente de documente</div></div>
+      </a>
+      <div class="pillbar">
+        <a class="pill" href="#produs">Produs</a>
+        <a class="pill" href="#verticale">Verticale</a>
+        <a class="pill" href="#demo">Solicită demo</a>
+      </div>
+    </div>
+
+    <div id="top" class="hero">
+      <div class="card">
+        <div class="badge" style="display:inline-flex;margin-bottom:10px;">
+          <span class="dot a"></span><span>AI + Workflow + Semnare</span>
+        </div>
+
+        <h1>Documentele tale.<br>În mișcare inteligentă.</h1>
+        <p class="lead">
+          DocFlowAI automatizează circuitul documentelor: <b>generare asistată de AI</b>, aprobări, audit și semnare.
+          Gândit pentru <b>Administrație Publică</b> și <b>companii</b>.
+        </p>
+
+        <div class="ctaRow">
+          <a class="btn primary" href="#demo">Solicită demo</a>
+          <a class="btn" href="#verticale">Vezi verticale</a>
+          <a class="btn" href="#produs">Cum funcționează</a>
+        </div>
+
+        <div class="badges">
+          <span class="badge"><span class="dot a"></span>Audit & trasabilitate</span>
+          <span class="badge"><span class="dot b"></span>Link semnare securizat</span>
+          <span class="badge"><span class="dot a"></span>Șabloane & texte oficiale</span>
+        </div>
+
+        <div class="mini">Status: <b>MVP</b> (pilot). Căutăm 2–5 organizații pentru implementare inițială.</div>
+      </div>
+
+      <div class="card">
+        <p class="k">Ce rezolvă</p>
+        <p class="v">Aprobări lente, versiuni pe email, lipsă audit, documente “blocate”.</p>
+
+        <div class="grid2">
+          <div>
+            <p class="k">Pentru Administrație</p>
+            <p class="v">circuit documente, note, referate, adrese, arhivare.</p>
+          </div>
+          <div>
+            <p class="k">Pentru Business</p>
+            <p class="v">contracte, HR, achiziții, fluxuri interne, semnare rapidă.</p>
+          </div>
+        </div>
+
+        <div class="hr"></div>
+
+        <p class="k">Diferențiator</p>
+        <p class="v">AI care propune și standardizează texte + motor de fluxuri configurabil.</p>
+
+        <div class="mini">Urmează: autentificare, roluri, policy-uri, export PDF final + audit log.</div>
+      </div>
+    </div>
+
+    <div id="produs" class="section">
+      <div class="card">
+        <h2>Produs</h2>
+        <div class="split">
+          <div>
+            <div class="tag">✅ Core platform</div>
+            <ul class="list">
+              <li class="li"><b>Fluxuri configurabile</b> (inițiere → aprobare → semnare → arhivare)</li>
+              <li class="li"><b>Semnare prin link</b> (cross-device), status în timp real</li>
+              <li class="li"><b>Audit & istoric</b> (cine / ce / când)</li>
+              <li class="li"><b>Export PDF final</b> + versiuni controlate</li>
+            </ul>
+          </div>
+          <div>
+            <div class="tag">✨ AI Assistant</div>
+            <ul class="list">
+              <li class="li"><b>Propune texte</b> (note, adrese, formulări standard)</li>
+              <li class="li"><b>Uniformizează limbajul</b> (clar, instituțional, coerent)</li>
+              <li class="li"><b>Checklist</b> pentru completitudine (câmpuri lipsă)</li>
+              <li class="li"><b>Șabloane</b> adaptate pe tipuri de document</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="verticale" class="section">
+      <div class="split">
+        <div class="card">
+          <div class="tag">🏛 DocFlowAI Public</div>
+          <h2>Administrație publică</h2>
+          <ul class="list">
+            <li class="li">Șabloane: <b>Notă de fundamentare</b>, <b>Referat necesitate</b>, <b>Adresă</b></li>
+            <li class="li">Câmpuri obligatorii: număr, dată, compartiment, avize</li>
+            <li class="li">Audit pregătit pentru verificări</li>
+            <li class="li">Opțiune: instalare dedicată / control acces</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="tag">💼 DocFlowAI Business</div>
+          <h2>Companii & IMM-uri</h2>
+          <ul class="list">
+            <li class="li">Fluxuri: contracte, HR, achiziții, aprobări interne</li>
+            <li class="li">Semnare rapidă + notificări</li>
+            <li class="li">Template-uri: NDA, contracte simple, procese verbale</li>
+            <li class="li">Opțiune: API + integrări (în faza 2)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div id="demo" class="section">
+      <div class="card">
+        <h2>Solicită demo</h2>
+        <p class="lead" style="margin-top:0">
+          Lasă datele și îți trimitem un demo (pilot) + întrebări rapide ca să configurăm fluxul potrivit.
+        </p>
+
+        <!--
+          Variante ușoare:
+          1) Înlocuiești action cu un link de Google Forms
+          2) Sau pui un mailto (default aici)
+          3) Sau conectăm ulterior la un endpoint (SaaS)
+        -->
+        <form action="mailto:hello@docflowai.ro" method="post" enctype="text/plain">
+          <div class="row">
+            <div>
+              <label>Nume</label>
+              <input name="Nume" placeholder="Nume și prenume" required />
+            </div>
+            <div>
+              <label>Email</label>
+              <input type="email" name="Email" placeholder="email@organizatie.ro" required />
+            </div>
+          </div>
+
+          <div class="row">
+            <div>
+              <label>Organizație</label>
+              <input name="Organizatie" placeholder="Primărie / companie / asociație" />
+            </div>
+            <div>
+              <label>Verticală</label>
+              <input name="Verticala" placeholder="Public / Business / Ambele" />
+            </div>
+          </div>
+
+          <label>Ce vrei să automatizăm?</label>
+          <textarea name="Mesaj" placeholder="Ex: note de fundamentare + semnare pe etape; contracte + aprobare manager; audit etc."></textarea>
+
+          <div class="ctaRow">
+            <button class="btn primary" type="submit">Trimite cererea</button>
+            <a class="btn" href="#top">Înapoi sus</a>
+          </div>
+
+          <div class="note">
+            Tip: putem înlocui formularul cu Google Forms sau cu un formular real care salvează lead-urile în sistem.
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="footer">
+      <div class="muted">© <span id="y"></span> DocFlowAI. Toate drepturile rezervate.</div>
+      <div class="footLinks">
+        <span class="muted">Contact:</span>
+        <a class="muted" href="mailto:hello@docflowai.ro">hello@docflowai.ro</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById("y").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
