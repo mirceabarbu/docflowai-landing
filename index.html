@@ -3,321 +3,889 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>DocFlowAI – Fluxuri inteligente de documente</title>
-  <meta name="description" content="DocFlowAI automatizează circuitul documentelor: generare asistată de AI, aprobări, audit și semnare. Pentru administrație publică și companii." />
+  <title>DocFlowAI – Semnare electronică pentru administrație publică</title>
+  <meta name="description" content="DocFlowAI automatizează circuitul documentelor în administrația publică: fluxuri configurabile, semnare electronică calificată, audit complet și arhivare Google Drive." />
   <meta name="robots" content="index,follow" />
+
   <style>
-    :root{
-      --bg:#0b1020;
-      --card:#0f1731;
-      --muted:#9db0ff;
-      --text:#eaf0ff;
-      --sub:#cdd8ff;
-      --line:rgba(255,255,255,.10);
-      --accent:#7c5cff;
-      --accent2:#2dd4bf;
-      --shadow: 0 20px 60px rgba(0,0,0,.35);
-      --radius:18px;
+    :root {
+      --bg: #070c1a;
+      --card: #0c1428;
+      --card2: #0f1731;
+      --muted: #6b82b8;
+      --text: #e8eeff;
+      --sub: #b8c8f0;
+      --line: rgba(255,255,255,.08);
+      --line2: rgba(255,255,255,.13);
+      --accent: #6c4ff0;
+      --accent2: #1ec8ae;
+      --accent3: #f06c4f;
+      --glow1: rgba(108,79,240,.4);
+      --glow2: rgba(30,200,174,.3);
     }
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0;
-      font: 16px/1.55 ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,"Apple Color Emoji","Segoe UI Emoji";
-      color:var(--text);
-      background:
-        radial-gradient(900px 500px at 18% 8%, rgba(124,92,255,.35), transparent 60%),
-        radial-gradient(700px 450px at 82% 12%, rgba(45,212,191,.22), transparent 55%),
-        radial-gradient(900px 600px at 50% 90%, rgba(124,92,255,.16), transparent 60%),
-        var(--bg);
-    }
-    a{color:inherit}
-    .wrap{max-width:1100px;margin:0 auto;padding:28px 18px 70px}
-    .nav{
-      display:flex;align-items:center;justify-content:space-between;
-      gap:14px;margin-bottom:22px;
-    }
-    .brand{display:flex;align-items:center;gap:10px;text-decoration:none}
-    .logo{
-      width:36px;height:36px;border-radius:12px;
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      box-shadow: 0 10px 30px rgba(124,92,255,.25);
-    }
-    .brand b{letter-spacing:.2px}
-    .pillbar{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end}
-    .pill{
-      padding:8px 12px;border:1px solid var(--line);border-radius:999px;
-      background: rgba(255,255,255,.04);
-      color:var(--sub); text-decoration:none;
-    }
-    .pill:hover{border-color:rgba(255,255,255,.22)}
-    .hero{
-      display:grid;grid-template-columns:1.1fr .9fr;gap:18px;align-items:stretch;
-      margin-top:14px;
-    }
-    @media (max-width: 900px){ .hero{grid-template-columns:1fr} .pillbar{justify-content:flex-start}}
-    .card{
-      border:1px solid var(--line);
-      background: rgba(15,23,49,.72);
-      backdrop-filter: blur(10px);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      padding: 22px;
-    }
-    h1{font-size:44px;line-height:1.05;margin:6px 0 12px}
-    @media (max-width: 520px){ h1{font-size:36px}}
-    .lead{color:var(--sub);font-size:18px;margin:0 0 18px}
-    .badges{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0 0}
-    .badge{
-      display:inline-flex;align-items:center;gap:8px;
-      padding:8px 12px;border-radius:999px;
-      background: rgba(255,255,255,.05);
-      border:1px solid rgba(255,255,255,.10);
-      color:var(--sub);
-    }
-    .dot{width:9px;height:9px;border-radius:50%}
-    .dot.a{background:var(--accent)}
-    .dot.b{background:var(--accent2)}
-    .ctaRow{display:flex;gap:12px;flex-wrap:wrap;margin-top:18px}
-    .btn{
-      display:inline-flex;align-items:center;justify-content:center;gap:10px;
-      padding:11px 14px;border-radius:14px;text-decoration:none;
-      border:1px solid rgba(255,255,255,.16);
-      background: rgba(255,255,255,.06);
-      color:var(--text);
-      cursor:pointer;
-    }
-    .btn:hover{border-color:rgba(255,255,255,.28)}
-    .btn.primary{
-      border: none;
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      box-shadow: 0 18px 40px rgba(124,92,255,.22);
-      font-weight:700;
-    }
-    .btn.primary:hover{filter:brightness(1.03)}
-    .mini{color:var(--muted);font-size:13px;margin-top:10px}
-    .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
-    @media (max-width: 900px){ .grid2{grid-template-columns:1fr}}
-    .k{font-size:14px;color:var(--muted);margin:0}
-    .v{margin:6px 0 0;color:var(--text);font-size:18px}
-    .section{margin-top:18px}
-    .section h2{margin:0 0 10px;font-size:22px}
-    .list{margin:0;padding:0;list-style:none;display:grid;gap:10px}
-    .li{
-      padding:12px;border:1px solid var(--line);border-radius:14px;
-      background: rgba(255,255,255,.04);
-      color:var(--sub);
-    }
-    .split{
-      display:grid;grid-template-columns:1fr 1fr;gap:14px
-    }
-    @media (max-width:900px){.split{grid-template-columns:1fr}}
-    .tag{
-      display:inline-flex;align-items:center;gap:8px;
-      font-size:12px;color:var(--sub);
-      border:1px solid rgba(255,255,255,.14);
-      padding:6px 10px;border-radius:999px;background:rgba(255,255,255,.04);
-      margin-bottom:10px;
-    }
-    .footer{
-      margin-top:22px;color:rgba(234,240,255,.78);
-      display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between
-    }
-    .footLinks{display:flex;gap:12px;flex-wrap:wrap}
-    .muted{color:rgba(234,240,255,.65)}
-    .hr{height:1px;background:var(--line);margin:18px 0}
-    input, textarea{
-      width:100%;
-      border:1px solid var(--line);
-      background: rgba(255,255,255,.04);
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
       color: var(--text);
-      border-radius: 14px;
-      padding: 12px 12px;
-      outline: none;
+      background: var(--bg);
+      overflow-x: hidden;
     }
-    textarea{min-height:96px;resize:vertical}
-    label{display:block;margin:10px 0 6px;color:var(--sub);font-size:13px}
-    .row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-    @media (max-width: 700px){ .row{grid-template-columns:1fr}}
-    .note{font-size:12px;color:rgba(234,240,255,.62);margin-top:10px}
+
+    /* ── Background ── */
+    body::before {
+      content: '';
+      position: fixed; inset: 0; z-index: 0;
+      background:
+        radial-gradient(ellipse 900px 600px at 15% 0%, rgba(108,79,240,.22) 0%, transparent 65%),
+        radial-gradient(ellipse 700px 500px at 88% 15%, rgba(30,200,174,.16) 0%, transparent 60%),
+        radial-gradient(ellipse 600px 400px at 50% 100%, rgba(108,79,240,.12) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    /* ── Grid noise overlay ── */
+    body::after {
+      content: '';
+      position: fixed; inset: 0; z-index: 0;
+      background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.015'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      pointer-events: none;
+      opacity: .5;
+    }
+
+    .wrap { max-width: 1120px; margin: 0 auto; padding: 0 22px; position: relative; z-index: 1; }
+
+    /* ── Nav ── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      padding: 16px 0;
+      background: rgba(7,12,26,.82);
+      backdrop-filter: blur(18px) saturate(1.4);
+      border-bottom: 1px solid var(--line);
+    }
+    .nav-inner {
+      max-width: 1120px; margin: 0 auto; padding: 0 22px;
+      display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    }
+    .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+    .brand img { height: 44px; width: auto; object-fit: contain; }
+    .nav-links { display: flex; gap: 6px; flex-wrap: wrap; }
+    .nav-link {
+      padding: 7px 14px; border-radius: 999px;
+      border: 1px solid transparent;
+      color: var(--sub); text-decoration: none; font-size: 14px;
+      transition: all .2s;
+    }
+    .nav-link:hover { border-color: var(--line2); color: var(--text); }
+    .nav-cta {
+      padding: 8px 18px; border-radius: 999px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: #fff; text-decoration: none; font-size: 14px; font-weight: 600;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      box-shadow: 0 0 24px rgba(108,79,240,.35);
+      transition: filter .2s, box-shadow .2s;
+    }
+    .nav-cta:hover { filter: brightness(1.07); box-shadow: 0 0 32px rgba(108,79,240,.5); }
+    @media (max-width: 640px) { .nav-links { display: none; } }
+
+    /* ── Hero ── */
+    .hero {
+      padding: 90px 0 72px;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center;
+    }
+    @media (max-width: 860px) { .hero { grid-template-columns: 1fr; padding: 60px 0 50px; } }
+
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 6px 14px; border-radius: 999px;
+      border: 1px solid rgba(108,79,240,.35);
+      background: rgba(108,79,240,.1);
+      font-size: 12px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase;
+      color: #a898ff; margin-bottom: 22px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    }
+    .hero-eyebrow span { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); display: inline-block; animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(.8)} }
+
+    h1 {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      font-size: clamp(38px, 5vw, 56px);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -.02em;
+      margin-bottom: 20px;
+    }
+    h1 .grad {
+      background: linear-gradient(135deg, #a898ff 0%, var(--accent2) 60%, #7ef8ea 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+
+    .hero-lead {
+      font-size: 17px; color: var(--sub); line-height: 1.65;
+      margin-bottom: 32px; max-width: 480px;
+    }
+
+    .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 36px; }
+
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 9px;
+      padding: 13px 26px; border-radius: 14px; border: none;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: #fff; font-size: 15px; font-weight: 700; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      text-decoration: none; cursor: pointer;
+      box-shadow: 0 8px 32px rgba(108,79,240,.35), 0 0 0 0 rgba(108,79,240,.4);
+      transition: filter .2s, box-shadow .2s, transform .15s;
+    }
+    .btn-primary:hover { filter: brightness(1.06); transform: translateY(-1px); box-shadow: 0 14px 40px rgba(108,79,240,.45); }
+    .btn-primary:active { transform: translateY(0); }
+
+    .btn-ghost {
+      display: inline-flex; align-items: center; gap: 9px;
+      padding: 12px 22px; border-radius: 14px;
+      border: 1px solid var(--line2);
+      background: rgba(255,255,255,.04);
+      color: var(--sub); font-size: 15px; text-decoration: none;
+      transition: border-color .2s, color .2s, background .2s;
+    }
+    .btn-ghost:hover { border-color: rgba(255,255,255,.22); color: var(--text); background: rgba(255,255,255,.07); }
+
+    .hero-badges { display: flex; gap: 10px; flex-wrap: wrap; }
+    .hbadge {
+      display: inline-flex; align-items: center; gap: 7px;
+      padding: 6px 12px; border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.04);
+      font-size: 12.5px; color: var(--sub);
+    }
+    .hbadge .dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+    .dot-v { background: var(--accent); }
+    .dot-t { background: var(--accent2); }
+
+    /* ── Hero right: flow preview ── */
+    .flow-preview {
+      background: rgba(12,20,40,.85);
+      border: 1px solid var(--line2);
+      border-radius: 20px;
+      padding: 24px;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 32px 80px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.07);
+      animation: floatCard 4s ease-in-out infinite;
+    }
+    @keyframes floatCard { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-6px)} }
+    @media (max-width: 860px) { .flow-preview { animation: none; } }
+
+    .fp-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 18px; padding-bottom: 14px;
+      border-bottom: 1px solid var(--line);
+    }
+    .fp-title { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; font-size: 13px; font-weight: 700; color: var(--sub); letter-spacing: .05em; text-transform: uppercase; }
+    .fp-status {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 4px 10px; border-radius: 999px;
+      background: rgba(30,200,174,.12); border: 1px solid rgba(30,200,174,.25);
+      font-size: 11px; color: var(--accent2); font-weight: 600;
+    }
+    .fp-status::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--accent2); display: inline-block; animation: pulse 2s infinite; }
+
+    .flow-steps { display: flex; flex-direction: column; gap: 10px; }
+    .flow-step {
+      display: flex; align-items: center; gap: 12px;
+      padding: 11px 14px; border-radius: 12px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.03);
+      transition: border-color .3s, background .3s;
+    }
+    .flow-step.done { border-color: rgba(30,200,174,.25); background: rgba(30,200,174,.05); }
+    .flow-step.active { border-color: rgba(108,79,240,.4); background: rgba(108,79,240,.08); }
+    .flow-step.wait { opacity: .5; }
+    .step-icon { width: 32px; height: 32px; border-radius: 9px; display: flex; align-items: center; justify-content: center; font-size: 15px; flex-shrink: 0; }
+    .step-icon.done-bg { background: rgba(30,200,174,.18); }
+    .step-icon.active-bg { background: rgba(108,79,240,.2); }
+    .step-icon.wait-bg { background: rgba(255,255,255,.06); }
+    .step-info { flex: 1; min-width: 0; }
+    .step-label { font-size: 13px; font-weight: 600; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; }
+    .step-sub { font-size: 11.5px; color: var(--muted); margin-top: 1px; }
+    .step-badge {
+      font-size: 10.5px; font-weight: 700; padding: 3px 9px; border-radius: 999px; flex-shrink: 0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; letter-spacing: .04em;
+    }
+    .sb-done { background: rgba(30,200,174,.15); color: var(--accent2); border: 1px solid rgba(30,200,174,.25); }
+    .sb-active { background: rgba(108,79,240,.2); color: #b0a0ff; border: 1px solid rgba(108,79,240,.35); }
+    .sb-wait { background: rgba(255,255,255,.05); color: var(--muted); border: 1px solid var(--line); }
+
+    .fp-notif {
+      margin-top: 14px; padding: 10px 14px; border-radius: 10px;
+      background: rgba(108,79,240,.1); border: 1px solid rgba(108,79,240,.2);
+      font-size: 12px; color: #c0b8ff; display: flex; align-items: center; gap: 8px;
+    }
+
+    /* ── Section ── */
+    section { padding: 72px 0; }
+    .section-label {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 5px 13px; border-radius: 999px;
+      border: 1px solid var(--line2);
+      background: rgba(255,255,255,.04);
+      font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 16px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    }
+    h2 {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      font-size: clamp(26px, 3.5vw, 36px);
+      font-weight: 800; letter-spacing: -.01em; line-height: 1.15;
+      margin-bottom: 14px;
+    }
+    .section-lead { font-size: 17px; color: var(--sub); max-width: 560px; line-height: 1.65; }
+
+    /* ── Feature grid ── */
+    .features-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 48px;
+    }
+    @media (max-width: 900px) { .features-grid { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 580px) { .features-grid { grid-template-columns: 1fr; } }
+
+    .feat-card {
+      padding: 24px; border-radius: 18px;
+      border: 1px solid var(--line);
+      background: rgba(12,20,40,.7);
+      backdrop-filter: blur(8px);
+      position: relative; overflow: hidden;
+      transition: border-color .3s, transform .3s, box-shadow .3s;
+    }
+    .feat-card:hover {
+      border-color: var(--line2); transform: translateY(-3px);
+      box-shadow: 0 20px 50px rgba(0,0,0,.3);
+    }
+    .feat-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      opacity: 0; transition: opacity .3s;
+    }
+    .feat-card:hover::before { opacity: 1; }
+    .feat-icon {
+      width: 44px; height: 44px; border-radius: 13px;
+      display: flex; align-items: center; justify-content: center; font-size: 20px;
+      margin-bottom: 14px;
+    }
+    .fi-purple { background: rgba(108,79,240,.18); }
+    .fi-teal { background: rgba(30,200,174,.15); }
+    .fi-orange { background: rgba(240,108,79,.15); }
+    .feat-title { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; font-size: 15px; font-weight: 700; margin-bottom: 8px; }
+    .feat-desc { font-size: 13.5px; color: var(--muted); line-height: 1.6; }
+    .feat-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 12px; }
+    .ftag {
+      font-size: 11px; padding: 3px 9px; border-radius: 999px;
+      border: 1px solid var(--line); color: var(--muted);
+      background: rgba(255,255,255,.03);
+    }
+
+    /* ── Stats row ── */
+    .stats-row {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px;
+      background: var(--line); border-radius: 18px; overflow: hidden;
+      border: 1px solid var(--line); margin-top: 60px;
+    }
+    @media (max-width: 700px) { .stats-row { grid-template-columns: 1fr 1fr; } }
+    .stat-cell {
+      padding: 28px 24px;
+      background: rgba(12,20,40,.9);
+      text-align: center;
+    }
+    .stat-num {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; font-size: 36px; font-weight: 800;
+      background: linear-gradient(135deg, var(--text), var(--sub));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      line-height: 1;
+    }
+    .stat-label { font-size: 12.5px; color: var(--muted); margin-top: 6px; }
+
+    /* ── Security section ── */
+    .security-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 40px;
+    }
+    @media (max-width: 700px) { .security-grid { grid-template-columns: 1fr; } }
+    .sec-card {
+      padding: 22px; border-radius: 16px;
+      border: 1px solid var(--line);
+      background: rgba(12,20,40,.6);
+      display: flex; gap: 14px; align-items: flex-start;
+    }
+    .sec-icon { font-size: 22px; flex-shrink: 0; margin-top: 2px; }
+    .sec-title { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; font-size: 14px; font-weight: 700; margin-bottom: 5px; }
+    .sec-desc { font-size: 13px; color: var(--muted); line-height: 1.55; }
+
+    /* ── Notificari ── */
+    .notif-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 40px; }
+    @media (max-width: 700px) { .notif-grid { grid-template-columns: 1fr; } }
+    .notif-card {
+      padding: 22px; border-radius: 16px;
+      border: 1px solid var(--line);
+      background: rgba(12,20,40,.65);
+      text-align: center;
+      transition: border-color .3s, transform .3s;
+    }
+    .notif-card:hover { border-color: var(--line2); transform: translateY(-2px); }
+    .notif-emoji { font-size: 32px; margin-bottom: 12px; }
+    .notif-title { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; font-size: 15px; font-weight: 700; margin-bottom: 7px; }
+    .notif-desc { font-size: 13px; color: var(--muted); line-height: 1.55; }
+
+    /* ── Verticale ── */
+    .vert-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 40px; }
+    @media (max-width: 700px) { .vert-grid { grid-template-columns: 1fr; } }
+    .vert-card {
+      padding: 28px; border-radius: 20px;
+      border: 1px solid var(--line);
+      background: rgba(12,20,40,.75);
+      backdrop-filter: blur(10px);
+      position: relative; overflow: hidden;
+    }
+    .vert-card::after {
+      content: ''; position: absolute; bottom: 0; right: 0;
+      width: 120px; height: 120px; border-radius: 50%;
+      opacity: .06; transform: translate(30%, 30%);
+    }
+    .vert-card.pub::after { background: var(--accent); }
+    .vert-card.biz::after { background: var(--accent2); }
+    .vert-tag {
+      display: inline-flex; align-items: center; gap: 7px;
+      padding: 5px 12px; border-radius: 999px; font-size: 11.5px;
+      font-weight: 700; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; letter-spacing: .06em; text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .vt-pub { background: rgba(108,79,240,.15); border: 1px solid rgba(108,79,240,.25); color: #a898ff; }
+    .vt-biz { background: rgba(30,200,174,.12); border: 1px solid rgba(30,200,174,.2); color: var(--accent2); }
+    .vert-h { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; font-size: 20px; font-weight: 800; margin-bottom: 14px; }
+    .vert-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+    .vert-list li {
+      display: flex; align-items: flex-start; gap: 9px;
+      font-size: 13.5px; color: var(--sub); line-height: 1.5;
+    }
+    .vert-list li::before { content: '→'; color: var(--muted); flex-shrink: 0; font-family: monospace; }
+
+    /* ── Arhivare ── */
+    .archive-card {
+      padding: 32px; border-radius: 20px;
+      border: 1px solid var(--line);
+      background: rgba(12,20,40,.75);
+      display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: center;
+      margin-top: 40px;
+    }
+    @media (max-width: 700px) { .archive-card { grid-template-columns: 1fr; } }
+    .drive-tree { font-family: 'DM Mono', 'Courier New', monospace; font-size: 12.5px; color: var(--muted); line-height: 2; }
+    .drive-tree .folder { color: var(--accent2); font-weight: 600; }
+    .drive-tree .file { color: var(--sub); }
+    .drive-tree .indent1 { padding-left: 16px; }
+    .drive-tree .indent2 { padding-left: 32px; }
+    .drive-tree .indent3 { padding-left: 48px; }
+
+    /* ── CTA ── */
+    .cta-section {
+      padding: 80px 0;
+      text-align: center;
+    }
+    .cta-card {
+      padding: 56px 40px; border-radius: 24px;
+      background: rgba(12,20,40,.8);
+      border: 1px solid rgba(108,79,240,.2);
+      backdrop-filter: blur(16px);
+      position: relative; overflow: hidden;
+    }
+    .cta-card::before {
+      content: ''; position: absolute; top: -60px; left: 50%; transform: translateX(-50%);
+      width: 300px; height: 300px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(108,79,240,.2), transparent 70%);
+      pointer-events: none;
+    }
+    .cta-card h2 { font-size: clamp(28px, 4vw, 42px); margin-bottom: 16px; }
+    .cta-lead { font-size: 17px; color: var(--sub); margin-bottom: 32px; max-width: 520px; margin-left: auto; margin-right: auto; }
+    .cta-actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+
+    /* ── Contact form ── */
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    @media (max-width: 640px) { .form-grid { grid-template-columns: 1fr; } }
+    label { display: block; font-size: 12.5px; color: var(--muted); margin-bottom: 6px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; font-weight: 600; letter-spacing: .05em; text-transform: uppercase; }
+    input, textarea, select {
+      width: 100%; padding: 11px 14px;
+      background: rgba(255,255,255,.05); border: 1px solid var(--line2);
+      border-radius: 12px; color: var(--text); font-size: 14px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      outline: none; transition: border-color .2s, box-shadow .2s;
+    }
+    input:focus, textarea:focus, select:focus {
+      border-color: rgba(108,79,240,.5);
+      box-shadow: 0 0 0 3px rgba(108,79,240,.12);
+    }
+    input::placeholder, textarea::placeholder { color: rgba(107,130,184,.5); }
+    textarea { min-height: 100px; resize: vertical; }
+    select option { background: var(--card); }
+    .form-note { font-size: 12px; color: var(--muted); margin-top: 10px; }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--line);
+      padding: 28px 0;
+    }
+    .footer-inner {
+      max-width: 1120px; margin: 0 auto; padding: 0 22px;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 14px;
+    }
+    .footer-copy { font-size: 13px; color: var(--muted); }
+    .footer-links { display: flex; gap: 20px; }
+    .footer-links a { font-size: 13px; color: var(--muted); text-decoration: none; transition: color .2s; }
+    .footer-links a:hover { color: var(--sub); }
+
+    /* ── Animations ── */
+    .fade-up {
+      opacity: 0; transform: translateY(28px);
+      animation: fadeUp .65s cubic-bezier(.22,1,.36,1) forwards;
+    }
+    @keyframes fadeUp { to { opacity:1; transform:translateY(0); } }
+    .delay-1 { animation-delay: .1s; }
+    .delay-2 { animation-delay: .2s; }
+    .delay-3 { animation-delay: .3s; }
+    .delay-4 { animation-delay: .4s; }
+
+    /* ── Divider ── */
+    .divider { height: 1px; background: var(--line); margin: 0; }
+
+    /* ── Highlight ── */
+    .hl-v { color: #a898ff; }
+    .hl-t { color: var(--accent2); }
   </style>
 </head>
-
 <body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a class="brand" href="#top">
+      <img src="/Logo.png" alt="DocFlowAI" />
+    </a>
+    <div class="nav-links">
+      <a class="nav-link" href="#functionalitati">Funcționalități</a>
+      <a class="nav-link" href="#securitate">Securitate</a>
+      <a class="nav-link" href="#verticale">Verticale</a>
+      <a class="nav-link" href="#contact">Contact</a>
+    </div>
+    <a class="nav-cta" href="https://app.docflowai.ro/login">Intră în aplicație →</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div id="top" class="wrap">
+  <div class="hero">
+    <div>
+      <div class="hero-eyebrow fade-up"><span></span> Pilot activ · Administrație publică</div>
+      <h1 class="fade-up delay-1">
+        Circuit documente.<br>
+        <span class="grad">Semnat. Arhivat.<br>Trasat.</span>
+      </h1>
+      <p class="hero-lead fade-up delay-2">
+        DocFlowAI digitalizează fluxurile de aprobare și semnare din instituțiile publice.
+        De la referat la arhivă — totul trasat, verificabil și sigur.
+      </p>
+      <div class="hero-actions fade-up delay-3">
+        <a class="btn-primary" href="https://app.docflowai.ro/login">🚀 Accesează aplicația</a>
+        <a class="btn-ghost" href="#contact">Solicită demo</a>
+      </div>
+      <div class="hero-badges fade-up delay-4">
+        <span class="hbadge"><span class="dot dot-v"></span>Semnare electronică calificată</span>
+        <span class="hbadge"><span class="dot dot-t"></span>Audit complet</span>
+        <span class="hbadge"><span class="dot dot-v"></span>Arhivare Google Drive</span>
+        <span class="hbadge"><span class="dot dot-t"></span>3 canale notificări</span>
+      </div>
+    </div>
+
+    <div class="flow-preview fade-up delay-2">
+      <div class="fp-header">
+        <span class="fp-title">Flux activ</span>
+        <span class="fp-status">Live</span>
+      </div>
+      <div class="flow-steps">
+        <div class="flow-step done">
+          <div class="step-icon done-bg">✅</div>
+          <div class="step-info">
+            <div class="step-label">Inițiator — ÎNTOCMIT</div>
+            <div class="step-sub">Referat de necesitate · 14 nov</div>
+          </div>
+          <span class="step-badge sb-done">Semnat</span>
+        </div>
+        <div class="flow-step done">
+          <div class="step-icon done-bg">✅</div>
+          <div class="step-info">
+            <div class="step-label">Inspector · Serviciul Financiar</div>
+            <div class="step-sub">Verificat și semnat · 15 nov</div>
+          </div>
+          <span class="step-badge sb-done">Semnat</span>
+        </div>
+        <div class="flow-step active">
+          <div class="step-icon active-bg">✍️</div>
+          <div class="step-info">
+            <div class="step-label">Șef Serviciu · Achiziții</div>
+            <div class="step-sub">Notificat via email + WhatsApp</div>
+          </div>
+          <span class="step-badge sb-active">Curent</span>
+        </div>
+        <div class="flow-step wait">
+          <div class="step-icon wait-bg">⏳</div>
+          <div class="step-info">
+            <div class="step-label">Primar — APROBAT</div>
+            <div class="step-sub">În așteptare</div>
+          </div>
+          <span class="step-badge sb-wait">Pending</span>
+        </div>
+      </div>
+      <div class="fp-notif">
+        📨 Notificare trimisă · Email + WhatsApp · acum 2 min
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- FUNCTIONALITATI -->
+<section id="functionalitati">
   <div class="wrap">
-    <div class="nav">
-      <a class="brand" href="#top" aria-label="DocFlowAI">
-        <img src="/Logo.png" alt="DocFlowAI" style="height:56px;width:auto;object-fit:contain;" />
-      </a>
-      <div class="pillbar">
-        <a class="pill" href="#produs">Produs</a>
-        <a class="pill" href="#verticale">Verticale</a>
-        <a class="pill" href="#implementare">Solicită implementare</a>
+    <div class="section-label">⚡ Funcționalități</div>
+    <h2>Tot ce ai nevoie pentru<br>circuitul documentelor</h2>
+    <p class="section-lead">Construit specific pentru fluxurile din administrația publică română — cu toate particularitățile lor.</p>
+
+    <div class="features-grid">
+      <div class="feat-card">
+        <div class="feat-icon fi-purple">🔄</div>
+        <div class="feat-title">Fluxuri configurabile</div>
+        <div class="feat-desc">Definești semnatarii, ordinea și rolurile. Fiecare pas este trasat automat — cine a semnat, când, în ce calitate.</div>
+        <div class="feat-tags"><span class="ftag">Multi-semnatar</span><span class="ftag">Ordine strictă</span><span class="ftag">Roluri</span></div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon fi-teal">🔐</div>
+        <div class="feat-title">Semnare prin link securizat</div>
+        <div class="feat-desc">Fiecare semnatar primește un link unic securizat. Token cu expiry 90 zile, verificare SHA256 a integrității PDF-ului.</div>
+        <div class="feat-tags"><span class="ftag">Token unic</span><span class="ftag">SHA256</span><span class="ftag">Cross-device</span></div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon fi-purple">📋</div>
+        <div class="feat-title">Audit trail complet</div>
+        <div class="feat-desc">Fiecare acțiune este înregistrată: semnat, refuzat, notificat, arhivat. Log imutabil cu timestamp și identitate.</div>
+        <div class="feat-tags"><span class="ftag">Timestamp</span><span class="ftag">Imutabil</span><span class="ftag">Export</span></div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon fi-teal">📄</div>
+        <div class="feat-title">Șabloane inteligente</div>
+        <div class="feat-desc">Șabloane pentru notă de fundamentare, referat, adresă. Câmpurile se populează automat din profilul utilizatorului.</div>
+        <div class="feat-tags"><span class="ftag">Auto-completare</span><span class="ftag">Profil user</span><span class="ftag">Personalizabil</span></div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon fi-orange">🗂</div>
+        <div class="feat-title">Arhivare Google Drive</div>
+        <div class="feat-desc">Fluxurile finalizate se arhivează automat în Drive — structură Instituție/An/Lună. PDF semnat + original + audit JSON.</div>
+        <div class="feat-tags"><span class="ftag">Service Account</span><span class="ftag">Structură automată</span><span class="ftag">Proxy stream</span></div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon fi-purple">⚡</div>
+        <div class="feat-title">Status în timp real</div>
+        <div class="feat-desc">WebSocket pentru actualizări live. Știi în orice moment unde e documentul tău și cine mai trebuie să semneze.</div>
+        <div class="feat-tags"><span class="ftag">WebSocket</span><span class="ftag">Badge-uri</span><span class="ftag">Live</span></div>
       </div>
     </div>
 
-    <div id="top" class="hero">
-      <div class="card">
-        <div class="badge" style="display:inline-flex;margin-bottom:10px;">
-          <span class="dot a"></span><span>AI + Workflow + Semnare</span>
-        </div>
-
-        <h1>Documentele tale.<br>În mișcare inteligentă.</h1>
-        <p class="lead">
-          DocFlowAI automatizează circuitul documentelor: <b>generare asistată de AI</b>, aprobări, audit și semnare.
-          Gândit pentru <b>Administrație Publică</b> și <b>companii</b>.
-        </p>
-
-        <div class="ctaRow">
-          <a class="btn primary" href="#implementare">Solicită implementare</a>
-          <a class="btn" href="#verticale">Vezi verticale</a>
-          <a class="btn" href="#produs">Cum funcționează</a>
-        </div>
-
-        <div class="badges">
-          <span class="badge"><span class="dot a"></span>Audit & trasabilitate</span>
-          <span class="badge"><span class="dot b"></span>Link semnare securizat</span>
-          <span class="badge"><span class="dot a"></span>Șabloane & texte oficiale</span>
-        </div>
-
-        <div class="mini">Status: <b>MVP</b> (pilot). Căutăm 2–5 organizații pentru implementare inițială.</div>
+    <div class="stats-row">
+      <div class="stat-cell">
+        <div class="stat-num">3</div>
+        <div class="stat-label">Canale notificări</div>
       </div>
-
-      <div class="card">
-        <p class="k">Ce rezolvă</p>
-        <p class="v">Aprobări lente, versiuni pe email, lipsă audit, documente “blocate”.</p>
-
-        <div class="grid2">
-          <div>
-            <p class="k">Pentru Administrație</p>
-            <p class="v">circuit documente, note, referate, adrese, arhivare.</p>
-          </div>
-          <div>
-            <p class="k">Pentru Business</p>
-            <p class="v">contracte, HR, achiziții, fluxuri interne, semnare rapidă.</p>
-          </div>
-        </div>
-
-        <div class="hr"></div>
-
-        <p class="k">Diferențiator</p>
-        <p class="v">AI care propune și standardizează texte + motor de fluxuri configurabil.</p>
-
-        <div class="mini">Urmează: autentificare, roluri, policy-uri, export PDF final + audit log.</div>
+      <div class="stat-cell">
+        <div class="stat-num">90z</div>
+        <div class="stat-label">Expiry token semnare</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-num">SHA256</div>
+        <div class="stat-label">Verificare integritate PDF</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-num">0</div>
+        <div class="stat-label">Documente pierdute</div>
       </div>
     </div>
+  </div>
+</section>
 
-    <div id="produs" class="section">
-      <div class="card">
-        <h2>Produs</h2>
-        <div class="split">
-          <div>
-            <div class="tag">✅ Core platform</div>
-            <ul class="list">
-              <li class="li"><b>Fluxuri configurabile</b> (inițiere → aprobare → semnare → arhivare)</li>
-              <li class="li"><b>Semnare prin link</b> (cross-device), status în timp real</li>
-              <li class="li"><b>Audit & istoric</b> (cine / ce / când)</li>
-              <li class="li"><b>Export PDF final</b> + versiuni controlate</li>
-            </ul>
-            <div style="margin-top:14px;">
-              <a href="https://app.docflowai.ro/login" class="btn primary" style="text-decoration:none;display:inline-flex;align-items:center;gap:8px;padding:11px 20px;border-radius:14px;background:linear-gradient(135deg,#7c5cff,#2dd4bf);color:#fff;font-weight:700;border:none;">
-                🚀 Intră în aplicație
-              </a>
-            </div>
-          </div>
-          <div>
-            <div class="tag">✨ AI Assistant</div>
-            <ul class="list">
-              <li class="li"><b>Propune texte</b> (note, adrese, formulări standard)</li>
-              <li class="li"><b>Uniformizează limbajul</b> (clar, instituțional, coerent)</li>
-              <li class="li"><b>Checklist</b> pentru completitudine (câmpuri lipsă)</li>
-              <li class="li"><b>Șabloane</b> adaptate pe tipuri de document</li>
-            </ul>
-          </div>
+<div class="divider"></div>
+
+<!-- NOTIFICARI -->
+<section>
+  <div class="wrap">
+    <div class="section-label">🔔 Notificări</div>
+    <h2>Toți semnatarii știu <span class="hl-v">când e rândul lor</span></h2>
+    <p class="section-lead">Trei canale independente de notificare — nimeni nu mai poate spune că „nu a știut".</p>
+
+    <div class="notif-grid">
+      <div class="notif-card">
+        <div class="notif-emoji">🔔</div>
+        <div class="notif-title">In-app</div>
+        <div class="notif-desc">Notificări în timp real prin WebSocket, cu badge de count pe tabs. Marchează citit, șterge, filtrează.</div>
+      </div>
+      <div class="notif-card">
+        <div class="notif-emoji">📧</div>
+        <div class="notif-title">Email</div>
+        <div class="notif-desc">Email automat via Resend la fiecare eveniment — rândul tău, document finalizat sau refuzat.</div>
+      </div>
+      <div class="notif-card">
+        <div class="notif-emoji">💬</div>
+        <div class="notif-title">WhatsApp</div>
+        <div class="notif-desc">Mesaj WhatsApp Business API pentru semnatarii care au activat această opțiune. Cel mai rapid canal.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SECURITATE -->
+<section id="securitate">
+  <div class="wrap">
+    <div class="section-label">🔒 Securitate</div>
+    <h2>Construit <span class="hl-t">securizat</span><br>de la fundație</h2>
+    <p class="section-lead">Nu e un add-on — securitatea e în fiecare endpoint, fiecare token, fiecare upload.</p>
+
+    <div class="security-grid">
+      <div class="sec-card">
+        <div class="sec-icon">🔑</div>
+        <div>
+          <div class="sec-title">JWT + Roluri</div>
+          <div class="sec-desc">Autentificare JWT cu roluri admin/user. Toate endpoint-urile PDF cer token valid — nu există acces anonim la documente.</div>
+        </div>
+      </div>
+      <div class="sec-card">
+        <div class="sec-icon">🛡️</div>
+        <div>
+          <div class="sec-title">Rate limiting login</div>
+          <div class="sec-desc">Maxim 10 încercări per IP+email în 15 minute. Blocare automată cu countdown vizibil în interfață.</div>
+        </div>
+      </div>
+      <div class="sec-card">
+        <div class="sec-icon">🔏</div>
+        <div>
+          <div class="sec-title">Verificare integritate PDF</div>
+          <div class="sec-desc">Hash SHA256 calculat la descărcare, verificat la upload. Serverul refuză orice PDF care nu a provenit din sistem.</div>
+        </div>
+      </div>
+      <div class="sec-card">
+        <div class="sec-icon">⏱️</div>
+        <div>
+          <div class="sec-title">Token semnatar cu expiry</div>
+          <div class="sec-desc">Link-urile de semnare expiră după 90 de zile. Adminul poate regenera token-uri expirate direct din panoul de administrare.</div>
+        </div>
+      </div>
+      <div class="sec-card">
+        <div class="sec-icon">🏛️</div>
+        <div>
+          <div class="sec-title">Proxy stream Drive</div>
+          <div class="sec-desc">PDF-urile arhivate în Google Drive sunt servite prin server — nu există link-uri publice Drive expuse utilizatorilor.</div>
+        </div>
+      </div>
+      <div class="sec-card">
+        <div class="sec-icon">👁️</div>
+        <div>
+          <div class="sec-title">Token strip la răspuns</div>
+          <div class="sec-desc">Token-urile semnatarilor nu sunt expuse în răspunsurile publice. Fiecare semnatar vede doar propriul token.</div>
         </div>
       </div>
     </div>
+  </div>
+</section>
 
-    <div id="verticale" class="section">
-      <div class="split">
-        <div class="card">
-          <div class="tag">🏛 DocFlowAI Public</div>
-          <h2>Administrație publică</h2>
-          <ul class="list">
-            <li class="li">Șabloane: <b>Notă de fundamentare</b>, <b>Referat necesitate</b>, <b>Adresă</b></li>
-            <li class="li">Câmpuri obligatorii: număr, dată, compartiment, avize</li>
-            <li class="li">Audit pregătit pentru verificări</li>
-            <li class="li">Opțiune: instalare dedicată / control acces</li>
+<div class="divider"></div>
+
+<!-- ARHIVARE -->
+<section>
+  <div class="wrap">
+    <div class="section-label">🗄️ Arhivare</div>
+    <h2>Arhivare automată în <span class="hl-t">Google Drive</span></h2>
+    <p class="section-lead">Fluxurile finalizate sunt arhivate cu un singur click — structură organizată automat, spațiu DB eliberat.</p>
+
+    <div class="archive-card">
+      <div>
+        <h3 style="font-family:inherit;font-size:19px;font-weight:700;margin-bottom:10px;">Ce se arhivează</h3>
+        <ul class="vert-list" style="gap:10px;">
+          <li>PDF semnat final (cu toate semnăturile)</li>
+          <li>PDF original (varianta inițială)</li>
+          <li>Audit JSON complet (events, timestamps, semnatari)</li>
+        </ul>
+        <div style="margin-top:20px;">
+          <h3 style="font-family:inherit;font-size:16px;font-weight:700;margin-bottom:8px;color:var(--sub);">Funcții admin</h3>
+          <ul class="vert-list">
+            <li>Preview arhivare cu estimare spațiu eliberat</li>
+            <li>Procesare batch (10/request, fără timeout)</li>
+            <li>VACUUM ANALYZE după arhivare masivă</li>
+            <li>Stats DB live (fluxuri, utilizatori, dimensiune)</li>
           </ul>
         </div>
-        <div class="card">
-          <div class="tag">💼 DocFlowAI Business</div>
-          <h2>Companii & IMM-uri</h2>
-          <ul class="list">
-            <li class="li">Fluxuri: contracte, HR, achiziții, aprobări interne</li>
-            <li class="li">Semnare rapidă + notificări</li>
-            <li class="li">Template-uri: NDA, contracte simple, procese verbale</li>
-            <li class="li">Opțiune: API + integrări (în faza 2)</li>
-          </ul>
+      </div>
+      <div>
+        <div style="font-family:inherit;font-size:12px;color:var(--muted);margin-bottom:10px;letter-spacing:.06em;text-transform:uppercase;">Structură Google Drive</div>
+        <div class="drive-tree">
+          <div class="folder">📁 DocFlowAI/</div>
+          <div class="indent1 folder">📁 Primăria Brașov/</div>
+          <div class="indent2 folder">📁 2026/</div>
+          <div class="indent3 folder">📁 03-Martie/</div>
+          <div class="indent3 file">📄 FLOW_A3B2_referat_semnat.pdf</div>
+          <div class="indent3 file">📄 FLOW_A3B2_referat_original.pdf</div>
+          <div class="indent3 file">📋 FLOW_A3B2_referat_audit.json</div>
+          <div class="indent2" style="color:var(--line2);font-size:11px;">···</div>
         </div>
       </div>
     </div>
+  </div>
+</section>
 
-    <div id="implementare" class="section">
-      <div class="card">
-        <h2>Solicită implementare</h2>
-        <p class="lead" style="margin-top:0">
-          Lasă datele și îți trimitem un demo (pilot) + întrebări rapide ca să configurăm fluxul potrivit.
-        </p>
+<div class="divider"></div>
 
-        <!--
-          Variante ușoare:
-          1) Înlocuiești action cu un link de Google Forms
-          2) Sau pui un mailto (default aici)
-          3) Sau conectăm ulterior la un endpoint (SaaS)
-        -->
+<!-- VERTICALE -->
+<section id="verticale">
+  <div class="wrap">
+    <div class="section-label">🎯 Verticale</div>
+    <h2>Potrivit pentru organizația ta</h2>
+
+    <div class="vert-grid">
+      <div class="vert-card pub">
+        <div class="vert-tag vt-pub">🏛 DocFlowAI Public</div>
+        <div class="vert-h">Administrație publică</div>
+        <ul class="vert-list">
+          <li>Notă de fundamentare, referat, adresă — șabloane predefinite</li>
+          <li>Câmpuri obligatorii: compartiment, funcție, dată, avize</li>
+          <li>Circuit complet: inițiator → avizatori → semnatar final</li>
+          <li>Audit pregătit pentru verificări și control intern</li>
+          <li>Multi-instituție cu izolare utilizatori pe instituție</li>
+        </ul>
+      </div>
+      <div class="vert-card biz">
+        <div class="vert-tag vt-biz">💼 DocFlowAI Business</div>
+        <div class="vert-h">Companii & IMM-uri</div>
+        <ul class="vert-list">
+          <li>Contracte, HR, achiziții, aprobări interne</li>
+          <li>Semnare rapidă fără instalare software</li>
+          <li>Template-uri: NDA, contracte simple, procese verbale</li>
+          <li>Notificări WhatsApp pentru aprobare rapidă</li>
+          <li>Arhivare organizată automat în Drive propriu</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="wrap">
+    <div style="max-width:640px;margin:0 auto;">
+      <div style="text-align:center;margin-bottom:40px;">
+        <div class="section-label" style="display:inline-flex;">✉️ Contact</div>
+        <h2>Solicită o demonstrație</h2>
+        <p class="section-lead" style="margin:0 auto;">Lasă datele și configurăm împreună fluxul potrivit pentru organizația ta.</p>
+      </div>
+
+      <div style="background:rgba(12,20,40,.8);border:1px solid var(--line2);border-radius:20px;padding:32px;backdrop-filter:blur(12px);">
         <form action="mailto:administrator@docflowai.ro" method="post" enctype="text/plain">
-          <div class="row">
+          <div class="form-grid">
             <div>
-              <label>Nume</label>
-              <input name="Nume" placeholder="Nume și prenume" required />
+              <label>Nume și prenume</label>
+              <input name="Nume" placeholder="Ion Popescu" required />
             </div>
             <div>
               <label>Email</label>
-              <input type="email" name="Email" placeholder="email@organizatie.ro" required />
+              <input type="email" name="Email" placeholder="ion@primarie.ro" required />
             </div>
           </div>
-
-          <div class="row">
+          <div class="form-grid" style="margin-top:14px;">
             <div>
               <label>Organizație</label>
-              <input name="Organizatie" placeholder="Primărie / companie / asociație" />
+              <input name="Organizatie" placeholder="Primăria / Compania" />
             </div>
             <div>
-              <label>Verticală</label>
-              <input name="Verticala" placeholder="Public / Business / Ambele" />
+              <label>Tip organizație</label>
+              <select name="Tip">
+                <option value="">Selectează...</option>
+                <option>Administrație publică</option>
+                <option>Companie privată</option>
+                <option>IMM</option>
+                <option>Altul</option>
+              </select>
             </div>
           </div>
-
-          <label>Ce vrei să automatizăm?</label>
-          <textarea name="Mesaj" placeholder="Ex: note de fundamentare + semnare pe etape; contracte + aprobare manager; audit etc."></textarea>
-
-          <div class="ctaRow">
-            <button class="btn primary" type="submit">Trimite cererea</button>
-            <a class="btn" href="#top">Înapoi sus</a>
+          <div style="margin-top:14px;">
+            <label>Ce vrei să automatizezi?</label>
+            <textarea name="Mesaj" placeholder="Ex: note de fundamentare cu 3 semnatari, contracte HR, procese verbale de recepție..."></textarea>
           </div>
-
-          <div class="note">
-            Tip: putem înlocui formularul cu Google Forms sau cu un formular real care salvează lead-urile în sistem.
+          <div style="margin-top:20px;display:flex;gap:12px;flex-wrap:wrap;">
+            <button class="btn-primary" type="submit" style="flex:1;justify-content:center;">Trimite cererea</button>
+            <a class="btn-ghost" href="https://app.docflowai.ro/login" style="flex:1;justify-content:center;">Intră în aplicație</a>
+          </div>
+          <div class="form-note" style="text-align:center;">
+            Sau scrie direct la <a href="mailto:administrator@docflowai.ro" style="color:var(--sub);">administrator@docflowai.ro</a>
           </div>
         </form>
       </div>
     </div>
+  </div>
+</section>
 
-    <div class="footer">
-      <div class="muted">© <span id="y"></span> DocFlowAI. Toate drepturile rezervate.</div>
-      <div class="footLinks">
-        <span class="muted">Contact:</span>
-        <a class="muted" href="mailto:administrator@docflowai.ro">administrator@docflowai.ro</a>
-      </div>
-    </
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div style="display:flex;align-items:center;gap:12px;">
+      <img src="/Logo.png" alt="DocFlowAI" style="height:32px;width:auto;opacity:.7;" />
+      <span class="footer-copy">© <span id="y"></span> DocFlowAI. Toate drepturile rezervate.</span>
+    </div>
+    <div class="footer-links">
+      <a href="mailto:administrator@docflowai.ro">administrator@docflowai.ro</a>
+      <a href="https://app.docflowai.ro/login">Aplicație</a>
+      <a href="#top">Sus ↑</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('y').textContent = new Date().getFullYear();
+
+  // Intersection observer pentru animații la scroll
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.feat-card, .sec-card, .notif-card, .vert-card, .stat-cell').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(20px)';
+    el.style.transition = 'opacity .6s cubic-bezier(.22,1,.36,1), transform .6s cubic-bezier(.22,1,.36,1)';
+    observer.observe(el);
+  });
+
+  // Stagger delay pentru grid-uri
+  document.querySelectorAll('.features-grid .feat-card').forEach((el, i) => {
+    el.style.transitionDelay = `${i * 0.07}s`;
+  });
+  document.querySelectorAll('.security-grid .sec-card').forEach((el, i) => {
+    el.style.transitionDelay = `${i * 0.07}s`;
+  });
+  document.querySelectorAll('.notif-grid .notif-card').forEach((el, i) => {
+    el.style.transitionDelay = `${i * 0.1}s`;
+  });
+  document.querySelectorAll('.stats-row .stat-cell').forEach((el, i) => {
+    el.style.transitionDelay = `${i * 0.08}s`;
+  });
+</script>
+</body>
+</html>
