@@ -240,9 +240,11 @@
       <div class="nav-links">
         <a class="nav-link" href="#functionalitati">Funcționalități</a>
         <a class="nav-link" href="#securitate">Securitate</a>
+        <a class="nav-link" href="#verificare">Verificare</a>
         <a class="nav-link" href="#arhivare">Arhivare</a>
         <a class="nav-link" href="#faq">FAQ</a>
         <a class="nav-link" href="#contact">Contact</a>
+        <a class="nav-link" href="https://app.docflowai.ro/verifica" style="color:var(--t);border-color:rgba(30,200,174,.25);">🔍 Verifică document</a>
       </div>
       <a class="nav-cta" href="https://app.docflowai.ro/login">Intră în aplicație →</a>
     </div>
@@ -257,21 +259,22 @@
           <span class="grad">Semnat. Arhivat.<br>Trasat.</span>
         </h1>
         <p class="lead">
-          DocFlowAI – Platformă instituțională de management documentar digitalizează fluxurile de aprobare și semnare: inițiere rapidă, notificări live,
-          audit complet și arhivare electronică securizată — pregătit pentru integrare cu un <span class="hl-v">provider de semnătură electronică calificată</span>.
+          DocFlowAI digitalizează fluxurile de aprobare și semnare: inițiere rapidă, notificări live,
+          audit complet și arhivare electronică securizată — cu <span class="hl-v">semnătură electronică calificată QES</span> prin <span class="hl-t">STS Cloud, certSIGN, Trans Sped</span> și alți provideri acreditați.
         </p>
 
         <div class="hero-actions">
           <a class="btn primary" href="https://app.docflowai.ro/login">🚀 Accesează aplicația</a>
           <a class="btn" href="#contact">Solicită demo</a>
-          <a class="btn" href="#functionalitati">Vezi funcționalități</a>
+          <a class="btn" href="https://app.docflowai.ro/verifica" style="border-color:rgba(30,200,174,.35);color:var(--t);">🔍 Verifică document</a>
         </div>
 
         <div class="badges">
           <span class="badge"><span class="dot v"></span>Fluxuri multi-semnatar</span>
           <span class="badge"><span class="dot t"></span>Notificări în timp real</span>
           <span class="badge"><span class="dot v"></span>Audit trail complet</span>
-          <span class="badge"><span class="dot o"></span>Arhivare arhivă electronică securizată</span>
+          <span class="badge"><span class="dot o"></span>Arhivare electronică securizată</span>
+          <span class="badge"><span class="dot t"></span>Semnătură electronică calificată QES</span>
         </div>
       </div>
 
@@ -419,9 +422,83 @@
 
       <div class="faq" style="margin-top:18px">
         <details>
-          <summary>Integrare cu provider de semnătură electronică calificată — cum o gândim?</summary>
-          <p>DocFlowAI – Platformă instituțională de management documentar păstrează fluxul și auditul. Integrarea cu un provider de semnătură calificată devine un modul (“signing provider”) care produce PDF-ul semnat și îl atașează fluxului, fără să schimbe experiența utilizatorului.</p>
+          <summary>Ce provideri de semnătură electronică calificată sunt suportați?</summary>
+          <p>DocFlowAI integreaza nativ <strong>STS Cloud QES</strong> (Serviciul de Telecomunicatii Speciale) cu flux complet OpenID Connect PKCE. Providerii certSIGN/Paperless, Trans Sped, AlfaTrust si Namirial sunt in integrare. Documentul ramane exclusiv pe serverul institutiei &mdash; la STS se trimite doar hash-ul SHA-256.</p>
         </details>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <section id="verificare">
+    <div class="wrap">
+      <div class="label">🔍 Verificare</div>
+      <h2>Verifică autenticitatea oricărui document</h2>
+      <p class="slead">Orice persoană — instituție, instanță, cetățean — poate verifica un document semnat prin DocFlowAI fără să aibă cont în platformă.</p>
+
+      <div class="grid2" style="margin-top:34px">
+        <div style="display:flex;flex-direction:column;gap:16px;">
+          <div class="rowcard">
+            <div class="ric">🔎</div>
+            <div>
+              <div class="rt">Verificare după ID flux</div>
+              <div class="rd">Introdu ID-ul documentului (ex: PT_9C076D0236) și verifici instant: cine a semnat, în ce ordine, la ce dată — direct din baza de date DocFlowAI.</div>
+            </div>
+          </div>
+          <div class="rowcard">
+            <div class="ric">📄</div>
+            <div>
+              <div class="rt">Verificare criptografică PDF</div>
+              <div class="rd">Încarcă PDF-ul semnat pentru verificare completă în 6 niveluri: integritate hash, semnătură CMS/PKCS#7, certificat, lanț X.509, OCSP/CRL și conformitate QES/eIDAS.</div>
+            </div>
+          </div>
+          <div class="rowcard">
+            <div class="ric">⚖️</div>
+            <div>
+              <div class="rt">Valoare juridică</div>
+              <div class="rd">Raportul de verificare confirmă: cine a semnat, cu ce certificat QTSP acreditat, că documentul nu a fost modificat după semnare și că semnătura e conformă eIDAS.</div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <!-- Preview verificator -->
+          <div class="preview" style="font-size:13px;">
+            <div class="pv-top">
+              <span class="pv-title">Verificator document</span>
+              <span class="pv-live">Public · Fără cont</span>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:14px;">
+              <div style="padding:10px 14px;background:rgba(30,200,174,.08);border:1px solid rgba(30,200,174,.2);border-radius:10px;display:flex;align-items:center;gap:10px;">
+                <span style="font-size:1.1rem;">✅</span>
+                <div><div style="font-weight:800;color:var(--t);">Document autentic — QES confirmat</div><div style="color:var(--muted);font-size:11px;margin-top:1px;">Semnătură calificată · STS Cloud · certSIGN</div></div>
+              </div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
+                <div style="padding:8px 10px;background:rgba(255,255,255,.03);border:1px solid var(--line);border-radius:8px;">
+                  <div style="font-size:10px;color:var(--muted);margin-bottom:2px;">L1 · Integritate</div>
+                  <div style="font-size:11px;font-weight:800;color:var(--t);">✅ Hash intact</div>
+                </div>
+                <div style="padding:8px 10px;background:rgba(255,255,255,.03);border:1px solid var(--line);border-radius:8px;">
+                  <div style="font-size:10px;color:var(--muted);margin-bottom:2px;">L2 · Semnătură CMS</div>
+                  <div style="font-size:11px;font-weight:800;color:var(--t);">✅ Validă</div>
+                </div>
+                <div style="padding:8px 10px;background:rgba(255,255,255,.03);border:1px solid var(--line);border-radius:8px;">
+                  <div style="font-size:10px;color:var(--muted);margin-bottom:2px;">L4 · Lanț certificare</div>
+                  <div style="font-size:11px;font-weight:800;color:var(--t);">✅ 3 niveluri</div>
+                </div>
+                <div style="padding:8px 10px;background:rgba(255,255,255,.03);border:1px solid var(--line);border-radius:8px;">
+                  <div style="font-size:10px;color:var(--muted);margin-bottom:2px;">L6 · QES/eIDAS</div>
+                  <div style="font-size:11px;font-weight:800;color:var(--t);">✅ Conform</div>
+                </div>
+              </div>
+            </div>
+            <a href="https://app.docflowai.ro/verifica"
+              style="display:block;text-align:center;padding:10px;background:linear-gradient(135deg,var(--v),var(--t));border-radius:10px;color:#fff;font-weight:800;font-size:13px;text-decoration:none;">
+              🔍 Deschide verificatorul →
+            </a>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -499,9 +576,9 @@
         <p class="cta-lead">Îți configurăm un flux real (cu semnatari, roluri, notificări și arhivare). Dacă vrei, îl conectăm ulterior la un provider de semnătură electronică calificată.</p>
         <div class="cta-actions">
           <a class="btn primary" href="https://app.docflowai.ro/login">Intră în aplicație</a>
-          <a class="btn" href="mailto:contact@docflowai.ro?subject=Demo%20DocFlowAI – Platformă instituțională de management documentar">Trimite email</a>
+          <a class="btn" href="/cdn-cgi/l/email-protection#bad9d5d4cedbd9cefaded5d9dcd6d5cddbd394c8d585c9cfd8d0dfd9ce87fedfd7d59f888afed5d9fcd6d5cdfbf39a583a299aead6dbcedcd5c8d77e399ad3d4c9ced3cecf7221d3d5d4dbd67e399adedf9ad7dbd4dbdddfd7dfd4ce9aded5d9cfd7dfd4cedbc8">Trimite email</a>
         </div>
-        <p style="margin-top:14px;color:var(--muted);font-size:12.5px">Email: <a style="color:var(--sub);text-decoration:none" href="mailto:contact@docflowai.ro">contact@docflowai.ro</a></p>
+        <p style="margin-top:14px;color:var(--muted);font-size:12.5px">Email: <a style="color:var(--sub);text-decoration:none" href="/cdn-cgi/l/email-protection#b8dbd7d6ccd9dbccf8dcd7dbded4d7cfd9d196cad7"><span class="__cf_email__" data-cfemail="40232f2e3421233400242f23262c2f3721296e322f">[email&#160;protected]</span></a></p>
       </div>
     </div>
   </section>
@@ -510,18 +587,8 @@
     <div class="footer-inner">
       <div style="display:flex;align-items:center;gap:12px;">
         <img src="/Logo.png" alt="DocFlowAI – Platformă instituțională de management documentar" style="height:32px;width:auto;opacity:.75" />
-        <span class="copy">© <span id="y"></span> DocFlowAI – Platformă instituțională de management documentar · Build: landing-v2</span>
+        <span class="copy">© <span id="y"></span> DocFlowAI – Platformă instituțională de management documentar · Build: landing-v3</span>
       </div>
       <div class="flinks">
-        <a href="https://app.docflowai.ro/login">Aplicație</a>
-        <a href="mailto:contact@docflowai.ro">contact@docflowai.ro</a>
-        <a href="#top">Sus ↑</a>
-      </div>
-    </div>
-  </footer>
-
-  <script>
-    document.getElementById("y").textContent = new Date().getFullYear();
-  </script>
-</body>
-</html>
+        <a href="https://app.docflowai.ro/verifica">🔍 Verifică document</a>
+        <a href="https://app.docflowai.ro/login">Aplicaț
