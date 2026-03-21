@@ -702,9 +702,9 @@
           result.textContent = '✅ Solicitarea a fost trimisă! Vă vom contacta în maxim 24 ore.';
           btn.textContent = '✅ Trimis';
           setTimeout(() => {
-            ['cf-inst','cf-name','cf-email','cf-phone','cf-msg'].forEach(id => document.getElementById(id).value = '');
-            document.getElementById('cf-subject').value = '';
-          }, 3000);
+            closeContactForm();
+            location.reload();
+          }, 1800);
         } else { throw new Error(d.error || 'Eroare server'); }
       } catch(e) {
         result.style.color = '#ff8080';
