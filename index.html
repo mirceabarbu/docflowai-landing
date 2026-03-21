@@ -223,24 +223,27 @@
     /* ── Modal formular contact ── */
     .cf-overlay{display:none;position:fixed;inset:0;z-index:200;background:rgba(7,12,26,.88);backdrop-filter:blur(8px);align-items:center;justify-content:center;padding:16px}
     .cf-overlay.open{display:flex}
-    .cf-modal{background:linear-gradient(160deg,rgba(12,20,44,.98),rgba(7,12,26,.98));border:1px solid rgba(108,79,240,.3);border-radius:20px;padding:36px 32px;width:100%;max-width:520px;position:relative;box-shadow:0 32px 80px rgba(0,0,0,.6)}
-    .cf-modal h3{font-size:1.25rem;font-weight:800;margin-bottom:6px;color:var(--text)}
-    .cf-modal p{font-size:.87rem;color:var(--sub);margin-bottom:22px}
-    .cf-close{position:absolute;top:14px;right:16px;background:none;border:none;color:var(--muted);font-size:1.3rem;cursor:pointer;padding:4px 8px;border-radius:6px;transition:.15s}
+    .cf-modal{background:linear-gradient(160deg,rgba(12,20,44,.98),rgba(7,12,26,.98));border:1px solid rgba(108,79,240,.3);border-radius:20px;padding:26px 28px 22px;width:100%;max-width:720px;position:relative;box-shadow:0 32px 80px rgba(0,0,0,.6)}
+    .cf-modal h3{font-size:1.1rem;font-weight:800;margin-bottom:4px;color:var(--text)}
+    .cf-modal>p{font-size:.82rem;color:var(--sub);margin-bottom:16px}
+    .cf-close{position:absolute;top:12px;right:14px;background:none;border:none;color:var(--muted);font-size:1.2rem;cursor:pointer;padding:4px 8px;border-radius:6px;transition:.15s}
     .cf-close:hover{color:var(--text);background:rgba(255,255,255,.07)}
-    .cf-field{display:flex;flex-direction:column;gap:5px;margin-bottom:14px}
-    .cf-field label{font-size:.78rem;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+    .cf-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px 16px}
+    .cf-full{grid-column:1/-1}
+    .cf-field{display:flex;flex-direction:column;gap:3px}
+    .cf-field label{font-size:.72rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
     .cf-field input,.cf-field select,.cf-field textarea{
-      background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);border-radius:10px;
-      color:var(--text);font-size:.9rem;padding:10px 13px;outline:none;transition:.2s;
-      font-family:inherit;resize:vertical
+      background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);border-radius:8px;
+      color:var(--text);font-size:.85rem;padding:8px 11px;outline:none;transition:.2s;
+      font-family:inherit;resize:none
     }
     .cf-field input:focus,.cf-field select:focus,.cf-field textarea:focus{border-color:rgba(108,79,240,.5);background:rgba(108,79,240,.07)}
     .cf-field select option{background:#0c1428;color:var(--text)}
-    .cf-send{width:100%;padding:12px;border-radius:12px;border:none;background:linear-gradient(135deg,var(--v),var(--t));color:#fff;font-size:.95rem;font-weight:700;cursor:pointer;transition:.2s;margin-top:6px}
+    .cf-send{width:100%;padding:11px;border-radius:10px;border:none;background:linear-gradient(135deg,var(--v),var(--t));color:#fff;font-size:.9rem;font-weight:700;cursor:pointer;transition:.2s;margin-top:8px}
     .cf-send:hover{filter:brightness(1.1);box-shadow:0 0 28px rgba(108,79,240,.45)}
     .cf-send:disabled{opacity:.6;cursor:not-allowed}
-    .cf-msg{font-size:.83rem;margin-top:10px;min-height:18px;text-align:center}
+    .cf-msg{font-size:.82rem;margin-top:8px;min-height:16px;text-align:center}
+    @media(max-width:600px){.cf-grid{grid-template-columns:1fr}.cf-full{grid-column:1}}
     footer{border-top:1px solid var(--line);padding:28px 0}
     .footer-inner{max-width:1120px;margin:0 auto;padding:0 22px;display:flex;gap:14px;align-items:center;justify-content:space-between;flex-wrap:wrap}
     .copy{font-size:13px;color:var(--muted)}
@@ -622,38 +625,40 @@
     <div class="cf-modal">
       <button class="cf-close" onclick="closeContactForm()">✕</button>
       <h3>📋 Solicită demo pentru instituția ta</h3>
-      <p>Completează datele de mai jos și te contactăm în maxim 24 ore pentru a configura un flux real.</p>
-      <div class="cf-field">
-        <label>Numele instituției *</label>
-        <input id="cf-inst" type="text" placeholder="ex: Primăria Municipiului Cluj-Napoca" />
-      </div>
-      <div class="cf-field">
-        <label>Persoană de contact *</label>
-        <input id="cf-name" type="text" placeholder="Nume și prenume" />
-      </div>
-      <div class="cf-field">
-        <label>Email de contact *</label>
-        <input id="cf-email" type="email" placeholder="email@institutie.ro" />
-      </div>
-      <div class="cf-field">
-        <label>Telefon</label>
-        <input id="cf-phone" type="tel" placeholder="07xx xxx xxx" />
-      </div>
-      <div class="cf-field">
-        <label>Ce solicitați *</label>
-        <select id="cf-subject">
-          <option value="">— Alegeți tipul solicitării —</option>
-          <option value="Demo platformă DocFlowAI">Demo platformă DocFlowAI</option>
-          <option value="Ofertă comercială">Ofertă comercială</option>
-          <option value="Integrare semnătură calificată (QES)">Integrare semnătură calificată (QES)</option>
-          <option value="Integrare cu sistem existent (AvanDoc, SIMEC etc.)">Integrare cu sistem existent (AvanDoc, SIMEC etc.)</option>
-          <option value="Informații tehnice / securitate">Informații tehnice / securitate</option>
-          <option value="Altele">Altele</option>
-        </select>
-      </div>
-      <div class="cf-field">
-        <label>Detalii suplimentare</label>
-        <textarea id="cf-msg" rows="3" placeholder="Descrieți pe scurt nevoile instituției..."></textarea>
+      <p>Completează datele de mai jos și te contactăm în maxim 24 ore.</p>
+      <div class="cf-grid">
+        <div class="cf-field cf-full">
+          <label>Numele instituției *</label>
+          <input id="cf-inst" type="text" placeholder="ex: Primăria Municipiului Cluj-Napoca" />
+        </div>
+        <div class="cf-field">
+          <label>Persoană de contact *</label>
+          <input id="cf-name" type="text" placeholder="Nume și prenume" />
+        </div>
+        <div class="cf-field">
+          <label>Email de contact *</label>
+          <input id="cf-email" type="email" placeholder="email@institutie.ro" />
+        </div>
+        <div class="cf-field">
+          <label>Telefon</label>
+          <input id="cf-phone" type="tel" placeholder="07xx xxx xxx" />
+        </div>
+        <div class="cf-field">
+          <label>Ce solicitați *</label>
+          <select id="cf-subject">
+            <option value="">— Alegeți tipul solicitării —</option>
+            <option value="Demo platformă DocFlowAI">Demo platformă DocFlowAI</option>
+            <option value="Ofertă comercială">Ofertă comercială</option>
+            <option value="Integrare semnătură calificată (QES)">Integrare semnătură calificată (QES)</option>
+            <option value="Integrare cu sistem existent (AvanDoc, SIMEC etc.)">Integrare cu sistem existent (AvanDoc, SIMEC etc.)</option>
+            <option value="Informații tehnice / securitate">Informații tehnice / securitate</option>
+            <option value="Altele">Altele</option>
+          </select>
+        </div>
+        <div class="cf-field cf-full">
+          <label>Detalii suplimentare</label>
+          <textarea id="cf-msg" rows="2" placeholder="Descrieți pe scurt nevoile instituției..."></textarea>
+        </div>
       </div>
       <button class="cf-send" id="cf-send-btn" onclick="submitContactForm()">📨 Trimite solicitarea</button>
       <div class="cf-msg" id="cf-result"></div>
