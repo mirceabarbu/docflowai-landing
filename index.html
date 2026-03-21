@@ -692,7 +692,7 @@
       if (!subject) { result.style.color='#ff8080'; result.textContent='Alegeți tipul solicitării.'; return; }
       btn.disabled = true; btn.textContent = '⏳ Se trimite...'; result.textContent = '';
       try {
-        const r = await fetch('/api/contact', {
+        const r = await fetch('https://app.docflowai.ro/api/contact', {
           method: 'POST', headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ inst, name, email, phone, subject, msg })
         });
