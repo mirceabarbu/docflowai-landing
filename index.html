@@ -80,7 +80,7 @@
       const result=document.getElementById('cf-result'); const btn=document.getElementById('cf-send-btn');
       if(!inst){result.style.color='#ff8080';result.textContent='Completați numele instituției.';return;}
       if(!name){result.style.color='#ff8080';result.textContent='Completați persoana de contact.';return;}
-      if(!email || !/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email)){result.style.color='#ff8080';result.textContent='Introduceți un email valid.';return;}
+      if(!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){result.style.color='#ff8080';result.textContent='Introduceți un email valid.';return;}
       if(!subject){result.style.color='#ff8080';result.textContent='Alegeți tipul solicitării.';return;}
       btn.disabled=true; btn.textContent='⏳ Se trimite...'; result.textContent='';
       try{
